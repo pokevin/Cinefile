@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "@biomejs/biome check .",
+    "format": "@biomejs/biome format --write ."
   },
   "license": "MIT",
   "dependencies": {
