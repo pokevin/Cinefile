@@ -14,8 +14,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "solid-js": "^1.7.8",
-    "@tauri-apps/api": "^1.5.1"
+    "@tauri-apps/api": "^1.5.1",
+    "clsx": "^2.0.0",
+    "solid-js": "^1.7.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.3.3",
