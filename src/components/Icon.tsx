@@ -1,6 +1,6 @@
 import type { JSX } from "solid-js/jsx-runtime";
 
-export type IconName = "gear";
+export type IconName = "gear" | "x";
 
 type IconProps = JSX.SvgSVGAttributes<SVGSVGElement> & {
   icon: IconName;
