@@ -15,16 +15,15 @@ export const Modal = (props: ModalProps) => {
     <ModalContextProvider value={{ id, onClose: props.onClose }}>
       <Portal>
         <Show when={props.isOpen}>
-          {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+          {/* biome-ignore lint/a11y/useKeyWithClickEvents: Click on the modal overlay closes the modal */}
           <div
-            role="dialog"
             aria-labelledby={`${id}-title`}
             aria-describedby={`${id}-description`}
             class="w-screen h-screen absolute top-0 bg-black/30"
             onClick={(e) => e.currentTarget === e.target && props.onClose()}
           >
             <div
-              role="document"
+              role="dialog"
               class="min-w-8 min-h-8 bg-background text-body absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-sm"
             >
               {props.children}
