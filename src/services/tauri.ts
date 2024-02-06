@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api";
 import { getName } from "@tauri-apps/api/app";
 import { open } from "@tauri-apps/api/dialog";
 import packageJson from "../../package.json";
@@ -39,4 +40,8 @@ export const getAppName = async () => {
     ),
   );
   return appName ?? packageJson.name;
+};
+
+export const launchFile = (filePath: string) => {
+  return invoke("launch_file", { filePath });
 };
