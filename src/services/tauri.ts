@@ -22,7 +22,7 @@ export const openDialogSelectDirectory = async (): Promise<
 > => {
   const selectedDirPath = await open({
     multiple: false,
-    title: "Open a file",
+    title: "Select the media directory",
     directory: true,
   }).catch(
     handleTauriError(
