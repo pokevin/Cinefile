@@ -43,5 +43,7 @@ export const getAppName = async () => {
 };
 
 export const launchFile = (filePath: string) => {
-  return invoke("launch_file", { filePath });
+  return invoke("launch_file", { filePath }).catch(
+    handleTauriError("Tauri API invoke() is not supported in web environement"),
+  );
 };
