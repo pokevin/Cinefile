@@ -20,7 +20,8 @@
         "readDir": true,
         "readFile": true,
         "renameFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "scope": ["$HOME/*"]
       }
     },
     "bundle": {
