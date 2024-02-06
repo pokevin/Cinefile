@@ -14,8 +14,9 @@ function isTauriError(err: unknown): err is TypeError {
 const handleTauriError = (message: string) => (err: Error) => {
   if (isTauriError(err)) {
     console.error(message);
+    return undefined;
   }
-  return undefined;
+  throw err;
 };
 
 export const openDialogSelectDirectory = async (): Promise<
