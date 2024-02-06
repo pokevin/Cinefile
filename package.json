@@ -16,6 +16,8 @@
   "dependencies": {
     "@tauri-apps/api": "^1.5.1",
     "clsx": "^2.0.0",
+    "jotai": "^2.6.4",
+    "solid-jotai": "^0.2.2",
     "solid-js": "^1.7.8"
   },
   "devDependencies": {
