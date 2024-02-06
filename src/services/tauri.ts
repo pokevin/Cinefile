@@ -33,7 +33,7 @@ export const openDialogSelectDirectory = async (): Promise<
 };
 
 export const getAppName = async () => {
-  const appName = getName().catch(
+  const appName = await getName().catch(
     handleTauriError(
       "Tauri API App getName() is not supported in web environement",
     ),
