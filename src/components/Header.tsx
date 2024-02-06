@@ -1,22 +1,7 @@
-import { getName } from "@tauri-apps/api/app";
 import { createResource, createSignal } from "solid-js";
-import packageJson from "../../package.json";
-import { isTauriError } from "../utils/tauri";
+import { getAppName } from "../services/tauri";
 import { Icon } from "./Icon";
 import { SettingsModal } from "./SettingsModal";
-
-const getAppName = async () => {
-  try {
-    return await getName();
-  } catch (err) {
-    if (isTauriError(err)) {
-      console.error(
-        "Tauri API App getName() is not supported in web environement",
-      );
-    }
-  }
-  return packageJson.name;
-};
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = createSignal(false);
