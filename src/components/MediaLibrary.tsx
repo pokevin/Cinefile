@@ -1,26 +1,37 @@
 import { For } from "solid-js";
 import type { Media } from "../services/medias";
+import { launchFile } from "../services/tauri";
 import { PosterImage } from "./PosterImage";
 
 type MediaLibraryProps = {
   medias: Media[];
 };
 
-export const MediaLibrary = (props: MediaLibraryProps) => (
-  <ul class="py-4 px-16 flex gap-4 flex-wrap">
-    <For each={props.medias}>
-      {(item) => (
-        <li class="flex flex-col group cursor-pointer relative w-40">
-          <PosterImage alt={item.title} src={item.posterPath} />
-          <div class="group-hover:opacity-50 absolute w-full aspect-poster bg-black border-2 border-primary opacity-0 transition-opacity" />
-          <span class="font-semibold text-ellipsis  overflow-hidden whitespace-nowrap">
-            {item.title}
-          </span>
-          <span class="text-body-secondary text-sm">
-            {item.releaseDate.getFullYear()}
-          </span>
-        </li>
-      )}
-    </For>
-  </ul>
-);
+export const MediaLibrary = (props: MediaLibraryProps) => {
+  const selectedMedia = async (path: string) => {
+    launchFile(path);
+  };
+  return (
+    <ul class="py-4 px-16 flex gap-4 flex-wrap">
+      <For each={props.medias}>
+        {(item) => (
+          <li class="group relative">
+            <button
+              type="button"
+              class="text-left w-40 overflow-hidden group-hover:after:opacity-50 after:absolute after:top-0 after:left-0 after:w-full after:aspect-poster after:bg-black after:border-2 after:border-primary after:opacity-0 after:transition-opacity"
+              onclick={() => selectedMedia(item.posterPath)}
+            >
+              <PosterImage alt={item.title} src={item.posterPath} />
+              <div class="font-semibold text-ellipsis overflow-hidden whitespace-nowrap">
+                {item.title}
+              </div>
+              <span class="text-body-secondary text-sm">
+                {item.releaseDate.getFullYear()}
+              </span>
+            </button>
+          </li>
+        )}
+      </For>
+    </ul>
+  );
+};
