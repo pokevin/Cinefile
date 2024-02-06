@@ -20,7 +20,7 @@ export const Modal = (props: ModalProps) => {
             role="dialog"
             aria-labelledby={`${id}-title`}
             aria-describedby={`${id}-description`}
-            class="w-screen h-screen absolute top-0 bg-black/30"
+            class="w-screen h-screen absolute top-0 bg-black/50"
             onClick={(e) => e.currentTarget === e.target && props.onClose()}
           >
             <div
