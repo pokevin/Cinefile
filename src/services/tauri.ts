@@ -1,6 +1,7 @@
 import { invoke } from "@tauri-apps/api";
 import { getName } from "@tauri-apps/api/app";
 import { open } from "@tauri-apps/api/dialog";
+import { readDir } from "@tauri-apps/api/fs";
 import packageJson from "../../package.json";
 
 function isTauriError(err: unknown): err is TypeError {
@@ -46,4 +47,14 @@ export const launchFile = (filePath: string) => {
   return invoke("launch_file", { filePath }).catch(
     handleTauriError("Tauri API invoke() is not supported in web environement"),
   );
+};
+
+export const getFilesFromPath = async (dirPath: string) => {
+  if (!dirPath) return;
+  const entries = await readDir(dirPath).catch(
+    handleTauriError(
+      "Tauri API FS readDir() is not supported in web environement",
+    ),
+  );
+  return entries ?? [];
 };
