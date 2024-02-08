@@ -12,3 +12,9 @@ export const getMedias = async (): Promise<Media[]> => {
   const db = await getDb();
   return db.getAll("medias");
 };
+
+export const insertMedias = async (medias: Media[]) => {
+  const db = await getDb();
+  await db.insertMany("medias", medias);
+  return medias;
+};
