@@ -3,6 +3,7 @@ import { getName } from "@tauri-apps/api/app";
 import { open } from "@tauri-apps/api/dialog";
 import { readDir } from "@tauri-apps/api/fs";
 import packageJson from "../../package.json";
+import { hasVideoFileExtension } from "../utils/video";
 
 function isTauriError(err: unknown): err is TypeError {
   return (
@@ -50,12 +51,18 @@ export const launchFile = (filePath: string) => {
   );
 };
 
-export const getFilesFromPath = async (dirPath: string) => {
+export const getVideoFilesFromPath = async (dirPath: string) => {
   if (!dirPath) return;
-  const entries = await readDir(dirPath).catch(
-    handleTauriError(
-      "Tauri API FS readDir() is not supported in web environement",
-    ),
-  );
+  const entries = await readDir(dirPath)
+    .then((files) =>
+      files.filter(
+        (file) => !file.children && hasVideoFileExtension(file.path),
+      ),
+    )
+    .catch(
+      handleTauriError(
+        "Tauri API FS readDir() is not supported in web environement",
+      ),
+    );
   return entries ?? [];
 };
