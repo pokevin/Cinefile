@@ -8,8 +8,8 @@ type MediaLibraryProps = {
 };
 
 export const MediaLibrary = (props: MediaLibraryProps) => {
-  const selectedMedia = async (path: string) => {
-    launchFile(path);
+  const selectedMedia = async (url: string) => {
+    launchFile(url).catch(console.error).then(console.info);
   };
   return (
     <ul class="py-4 px-16 flex gap-4 flex-wrap">
@@ -19,7 +19,7 @@ export const MediaLibrary = (props: MediaLibraryProps) => {
             <button
               type="button"
               class="text-left w-40 overflow-hidden group-hover:after:opacity-50 after:absolute after:top-0 after:left-0 after:w-full after:aspect-poster after:bg-black after:border-2 after:border-primary after:opacity-0 after:transition-opacity"
-              onclick={() => selectedMedia(item.posterPath)}
+              onclick={() => selectedMedia(item.url)}
             >
               <PosterImage alt={item.title} src={item.posterPath} />
               <div class="font-semibold text-ellipsis overflow-hidden whitespace-nowrap">

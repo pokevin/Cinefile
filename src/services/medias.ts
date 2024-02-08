@@ -4,6 +4,7 @@ export interface Media {
   id: string;
   title: string;
   posterPath: string;
+  url: string;
   releaseDate: Date;
 }
 
