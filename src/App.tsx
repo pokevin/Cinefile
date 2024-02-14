@@ -1,4 +1,5 @@
 import { createResource } from "solid-js";
+import { v5 as uuidv5 } from "uuid";
 import { Header } from "./components/Header";
 import { MediaLibrary } from "./components/MediaLibrary";
 import { useConfig } from "./services/config";
@@ -10,6 +11,10 @@ const getMediasFromPath = async (path: string) => {
     getVideoFilesFromPath(path),
     getMedias(),
   ]);
+  console.log({
+    currentFiles,
+    mediaList,
+  });
   if (!currentFiles) return mediaList;
   const medias = mediaList.filter((media) =>
     currentFiles.some((file) => file.path === media.id),
@@ -18,7 +23,7 @@ const getMediasFromPath = async (path: string) => {
     const newMedias: Media[] = currentFiles
       .filter((file) => !medias.some((media) => media.id === file.path))
       .map((file) => ({
-        id: file.path,
+        id: uuidv5(file.path, "00000000-0000-0000-0000-000000000000"),
         title: file.name?.replace(/\.[^/.]+$/, "") ?? "Unknown",
         posterPath: "",
         url: file.path,
