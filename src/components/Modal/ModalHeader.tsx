@@ -8,7 +8,10 @@ export const ModalHeader = (props: JSX.HTMLAttributes<HTMLElement>) => {
   return (
     <header
       {...props}
-      class={clsx("flex items-center gap-8 px-6 py-4", props.class)}
+      class={clsx(
+        "flex items-center justify-between gap-8 px-6 py-4",
+        props.class,
+      )}
     >
       {!!props.children && (
         <h2 id={id ? `${id}-title` : undefined} class="text-2xl">

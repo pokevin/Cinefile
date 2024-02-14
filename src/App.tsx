@@ -1,12 +1,9 @@
-import { For, createResource } from "solid-js";
+import { createResource } from "solid-js";
 import { Header } from "./components/Header";
 import { MediaLibrary } from "./components/MediaLibrary";
 import { useConfig } from "./services/config";
 import { type Media, getMedias, insertMedias } from "./services/medias";
-import {
-  getVideoFilesFromPath,
-  openDialogSelectDirectory,
-} from "./services/tauri";
+import { getVideoFilesFromPath } from "./services/tauri";
 
 const getMediasFromPath = async (path: string) => {
   const [currentFiles, mediaList] = await Promise.all([
@@ -34,32 +31,15 @@ const getMediasFromPath = async (path: string) => {
 };
 
 function App() {
-  const [config, setConfig] = useConfig();
+  const [config] = useConfig();
   const mediaDirectoryPath = () => config().mediaDirectoryPath;
   const [medias] = createResource(mediaDirectoryPath, getMediasFromPath);
-
-  const onSelectFolder = async () => {
-    const selectedDirPath = await openDialogSelectDirectory();
-    if (selectedDirPath) {
-      setConfig("mediaDirectoryPath", selectedDirPath);
-    }
-  };
 
   return (
     <div class="text-body min-h-screen min-w-full">
       <Header />
       <main>
         <MediaLibrary medias={medias() ?? []} />
-        <p>Selected path : {mediaDirectoryPath() ?? "None"}</p>
-        <button type="button" onclick={onSelectFolder}>
-          Select a folder
-        </button>
-        <p>{medias()?.length === 0 && <span>No file found</span>}</p>
-        <ul>
-          <For each={medias()}>
-            {(item) => <li>{JSON.stringify(item, null, 2)}</li>}
-          </For>
-        </ul>
       </main>
     </div>
   );
