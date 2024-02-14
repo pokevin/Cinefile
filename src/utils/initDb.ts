@@ -57,7 +57,7 @@ export async function initDb<DB extends Database>(
     },
     deleteMany<Id extends StoreKey<DB, StoreNames<DB>>>(
       tablename: StoreNames<DB>,
-      ids: [Id, ...Id[]],
+      ids: Id[],
     ) {
       const tx = db.transaction(tablename, "readwrite");
       return Promise.all([...ids.map((id) => tx.store.delete(id)), tx.done]);
