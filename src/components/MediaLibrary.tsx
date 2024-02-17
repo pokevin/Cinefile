@@ -12,7 +12,7 @@ export const MediaLibrary = (props: MediaLibraryProps) => {
     launchFile(url).catch(console.error).then(console.info);
   };
   return (
-    <ul class="py-4 px-16 flex gap-4 flex-wrap">
+    <ul class="flex gap-4 flex-wrap">
       <For each={props.medias}>
         {(item) => (
           <li class="group relative">

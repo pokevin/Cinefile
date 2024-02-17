@@ -1,9 +1,8 @@
 import { useConfig } from "../services/config";
-import { openDialogSelectDirectory } from "../services/tauri";
-import { Icon } from "./Icon";
 import { Modal } from "./Modal/Modal";
 import { ModalContent } from "./Modal/ModalContent";
 import { ModalHeader } from "./Modal/ModalHeader";
+import { SelectMediaDirectoryButton } from "./SelectMediaDirectoryButton";
 
 type SettingsModalProps = {
   isOpen: boolean;
@@ -11,14 +10,7 @@ type SettingsModalProps = {
 };
 
 export const SettingsModal = (props: SettingsModalProps) => {
-  const [config, setConfig] = useConfig();
-
-  const onSelectFolder = async () => {
-    const selectedDirPath = await openDialogSelectDirectory();
-    if (selectedDirPath) {
-      setConfig("mediaDirectoryPath", selectedDirPath);
-    }
-  };
+  const [config] = useConfig();
 
   return (
     <Modal id="settings-modal" isOpen={props.isOpen} onClose={props.onClose}>
@@ -36,13 +28,9 @@ export const SettingsModal = (props: SettingsModalProps) => {
               required
               value={config().mediaDirectoryPath}
             />
-            <button
-              type="button"
-              class="text-nowrap rounded-md bg-primary/90 hover:bg-primary px-4 py-2"
-              onclick={() => onSelectFolder()}
-            >
-              Select a folder
-            </button>
+            <SelectMediaDirectoryButton>
+              Select the media directory
+            </SelectMediaDirectoryButton>
           </div>
         </div>
       </ModalContent>
