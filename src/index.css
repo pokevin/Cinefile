@@ -6,11 +6,26 @@
   :root {
     --color-primary: 56 213 132;
     --color-bg-primary: 11 12 15;
-
+    --color-text-readonly: 107 114 128;
+    --color-bg-input-readonly: 30 41 59;
     --color-text: 255 255 255;
   }
 }
 
 body {
+  color-scheme: dark;
   background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(23, 55, 70, 1) 50%, rgba(65, 129, 30, 1) 100%);
+}
+
+input {
+  border-radius: 7px;
+  padding: 8px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: all;
+}
+
+input:read-only {
+  border: none;
+  color: rgb(var(--color-text-readonly));
 }

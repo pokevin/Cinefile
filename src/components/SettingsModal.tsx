@@ -23,7 +23,7 @@ export const SettingsModal = (props: SettingsModalProps) => {
           <div class="flex gap-2 items-center">
             <input
               type="text"
-              class="peer h-full w-96 rounded-[7px] border border-white bg-transparent px-3 py-2 text-sm font-normal outline-0 transition-all read-only:text-slate-500 read-only:border-0 read-only:bg-slate-800"
+              class="h-full w-96"
               readOnly
               required
               value={config().mediaDirectoryPath}
