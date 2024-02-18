@@ -1,18 +1,11 @@
 import clsx from "clsx";
-import { createSignal } from "solid-js";
 import type { JSX } from "solid-js/jsx-runtime";
 
-export const PosterImage = ({
-  alt,
-  ...props
-}: JSX.ImgHTMLAttributes<HTMLImageElement>) => {
-  const [src, setSrc] = createSignal(props.src);
+export const PosterImage = (props: JSX.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
     <img
       {...props}
-      src={src()}
-      onerror={() => setSrc("")}
-      alt={alt}
+      alt={props.alt}
       width={160}
       height={237}
       class={clsx(

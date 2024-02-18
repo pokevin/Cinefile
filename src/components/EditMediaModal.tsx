@@ -1,3 +1,5 @@
+import debounce from "debounce";
+import { createSignal } from "solid-js";
 import type { Media } from "../services/medias";
 import { formatDate } from "../utils/date";
 import { Icon } from "./Icon";
@@ -14,6 +16,14 @@ type EditMediaModalProps = {
 };
 
 export const EditMediaModal = (props: EditMediaModalProps) => {
+  const [posterPath, setPosterPath] = createSignal(props.media.posterPath);
+
+  const handleChangePosterURL = debounce(
+    (event: InputEvent & { target: HTMLInputElement }) => {
+      if (event.target.validity.valid) setPosterPath(event.target.value);
+    },
+  );
+
   const onSaveEdit = (event: Event) => {
     event.preventDefault();
     const { releaseDate, ...editedMedia } = Object.fromEntries(
@@ -34,8 +44,8 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
           <div class="flex gap-8">
             <PosterImage
               alt={props.media.title}
-              src={props.media.posterPath}
-              class="border border-white"
+              src={posterPath()}
+              class="bg-white/20"
             />
             <div class="flex flex-col gap-4 whitespace-nowrap">
               <div class="flex gap-2 items-center">
@@ -60,7 +70,8 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   class="min-w-96 w-full"
                   name="posterPath"
                   id="media-poster-path"
-                  value={props.media.posterPath}
+                  onInput={handleChangePosterURL}
+                  value={posterPath()}
                 />
               </div>
               <div class="flex gap-2 items-center">
