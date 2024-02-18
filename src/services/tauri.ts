@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api";
 import { getName } from "@tauri-apps/api/app";
 import { open } from "@tauri-apps/api/dialog";
 import { readDir } from "@tauri-apps/api/fs";
+import { FetchOptions, fetch } from "@tauri-apps/api/http";
 import packageJson from "../../package.json";
 import { hasVideoFileExtension } from "../utils/video";
 
@@ -66,3 +67,16 @@ export const getVideoFilesFromPath = async (dirPath: string) => {
     );
   return entries ?? [];
 };
+
+export const tauriFetch = <R>(
+  input: URL | RequestInfo,
+  init?: Partial<FetchOptions>,
+) =>
+  fetch<R>(input.toString(), {
+    ...init,
+    method: init?.method ?? "GET",
+  }).catch(
+    handleTauriError(
+      "Tauri API HTTP fetch() is not supported in web environement",
+    ),
+  );
