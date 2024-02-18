@@ -3,6 +3,7 @@ import { getName } from "@tauri-apps/api/app";
 import { open } from "@tauri-apps/api/dialog";
 import { readDir } from "@tauri-apps/api/fs";
 import { FetchOptions, fetch } from "@tauri-apps/api/http";
+import { locale } from "@tauri-apps/api/os";
 import packageJson from "../../package.json";
 import { hasVideoFileExtension } from "../utils/video";
 
@@ -78,5 +79,12 @@ export const tauriFetch = <R>(
   }).catch(
     handleTauriError(
       "Tauri API HTTP fetch() is not supported in web environement",
+    ),
+  );
+
+export const getLocale = () =>
+  locale().catch(
+    handleTauriError(
+      "Tauri API OS locale() is not supported in web environement",
     ),
   );
