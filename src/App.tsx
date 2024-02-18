@@ -1,4 +1,4 @@
-import { Show, createEffect } from "solid-js";
+import { Show } from "solid-js";
 import { Header } from "./components/Header";
 import { MediaLibrary } from "./components/MediaLibrary";
 import { SelectMediaDirectoryButton } from "./components/SelectMediaDirectoryButton";
