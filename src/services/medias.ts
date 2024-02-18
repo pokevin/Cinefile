@@ -18,3 +18,9 @@ export const insertMedias = async (medias: Media[]) => {
   await db.insertMany("medias", medias);
   return medias;
 };
+
+export const updateMedia = async (media: Media) => {
+  const db = await getDb();
+  await db.update("medias", media);
+  return media;
+};
