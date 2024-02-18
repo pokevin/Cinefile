@@ -34,9 +34,12 @@ interface MediaSearchResponse {
 
 export const searchMedia = async (
   query: string,
+  lang?: string,
 ): Promise<MediaSearchResponse> => {
   const requestUrl = new URL(SEARCH_API_URL);
   requestUrl.searchParams.set("query", query);
+  if (lang) requestUrl.searchParams.set("language", lang);
+
   const response = await tauriFetch<MediaSearchResponse>(requestUrl, {
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_IMDB_TOKEN}`,
