@@ -7,6 +7,7 @@ import { Modal } from "./Modal/Modal";
 import { ModalContent } from "./Modal/ModalContent";
 import { ModalHeader } from "./Modal/ModalHeader";
 import { PosterImage } from "./PosterImage";
+import { SearchMediaBar } from "./SearchMediaBar";
 
 type EditMediaModalProps = {
   media: Media;
@@ -16,11 +17,18 @@ type EditMediaModalProps = {
 };
 
 export const EditMediaModal = (props: EditMediaModalProps) => {
-  const [posterPath, setPosterPath] = createSignal(props.media.posterPath);
+  const [editingMedia, setEditingMedia] = createSignal<
+    Pick<Media, "title" | "posterPath" | "releaseDate">
+  >(props.media);
 
   const handleChangePosterURL = debounce(
     (event: InputEvent & { target: HTMLInputElement }) => {
-      if (event.target.validity.valid) setPosterPath(event.target.value);
+      if (event.target.validity.valid) {
+        setEditingMedia((prev) => ({
+          ...prev,
+          posterPath: event.target.value,
+        }));
+      }
     },
   );
 
@@ -44,7 +52,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
           <div class="flex gap-8">
             <PosterImage
               alt={props.media.title}
-              src={posterPath()}
+              src={editingMedia().posterPath}
               class="bg-white/20"
             />
             <div class="flex flex-col gap-4 whitespace-nowrap">
@@ -59,7 +67,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   id="media-title"
                   autocomplete="off"
                   required
-                  value={props.media.title}
+                  value={editingMedia().title}
                 />
               </div>
               <div class="flex gap-2 items-center">
@@ -71,7 +79,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   name="posterPath"
                   id="media-poster-path"
                   onInput={handleChangePosterURL}
-                  value={posterPath()}
+                  value={editingMedia().posterPath}
                 />
               </div>
               <div class="flex gap-2 items-center">
@@ -84,8 +92,11 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   id="media-release-date"
                   name="releaseDate"
                   required
-                  value={formatDate(props.media.releaseDate)}
+                  value={formatDate(editingMedia().releaseDate)}
                 />
+              </div>
+              <div>
+                <SearchMediaBar onSelectMedia={setEditingMedia} />
               </div>
             </div>
           </div>
