@@ -65,7 +65,7 @@ export const MediaLibrary = () => {
     medias()?.find((media) => media.id === editingMediaId());
 
   return (
-    <ul class="flex gap-4 flex-wrap">
+    <ul class="flex gap-4 flex-wrap bg-black/30 rounded-3xl p-8">
       <For each={medias()}>
         {(item) => (
           <li class="group relative">
