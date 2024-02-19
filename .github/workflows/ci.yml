@@ -38,6 +38,7 @@ jobs:
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_TMDB_TOKEN: ${{ secrets.VITE_TMDB_TOKEN }}
         with:
           tagName: cinefile-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
           releaseName: 'Cinefile-v__VERSION__'
