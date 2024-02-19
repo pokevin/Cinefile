@@ -2,8 +2,16 @@ import { tauriFetch } from "./tauri";
 
 const SEARCH_API_URL = "https://api.themoviedb.org/3/search/movie";
 
-const getPosterPath = (suffix: string) =>
-  `https://image.tmdb.org/t/p/w300_and_h450_bestv2${suffix}`;
+const mapPosterPathSize = {
+  original: "original",
+  medium: "w300_and_h450_bestv2",
+  small: "w94_and_h141_bestv2",
+} as const;
+
+const getPosterPath = (
+  suffix: string,
+  size: "medium" | "small" | "original" = "medium",
+) => `https://image.tmdb.org/t/p/${mapPosterPathSize[size]}${suffix}`;
 
 interface MediaSearchResult {
   /** is it an adult media ? */
@@ -42,7 +50,7 @@ export const searchMedia = async (
 
   const response = await tauriFetch<MediaSearchResponse>(requestUrl, {
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_IMDB_TOKEN}`,
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
     },
   });
 
