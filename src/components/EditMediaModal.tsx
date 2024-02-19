@@ -1,5 +1,6 @@
 import debounce from "debounce";
 import { createSignal } from "solid-js";
+import { useTranslation } from "../services/i18n/translate";
 import type { Media } from "../services/medias";
 import { formatDate } from "../utils/date";
 import { Icon } from "./Icon";
@@ -20,6 +21,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
   const [editingMedia, setEditingMedia] = createSignal<
     Pick<Media, "title" | "posterPath" | "releaseDate">
   >(props.media);
+  const t = useTranslation();
 
   const handleChangePosterURL = debounce(
     (event: InputEvent & { target: HTMLInputElement }) => {
@@ -46,7 +48,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
 
   return (
     <Modal id="edit-media-modal" isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalHeader>Edit media</ModalHeader>
+      <ModalHeader>{t("Edit media")}</ModalHeader>
       <ModalContent class="p-6">
         <form class="flex flex-col gap-8" onSubmit={onSaveEdit}>
           <div class="flex gap-8">
@@ -58,7 +60,8 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
             <div class="flex flex-col gap-4 whitespace-nowrap">
               <div class="flex gap-2 items-center">
                 <label for="media-title">
-                  Title<span class="text-red-700">*</span>
+                  {t("Title")}
+                  <span class="text-red-700">*</span>
                 </label>
                 <input
                   type="text"
@@ -71,7 +74,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                 />
               </div>
               <div class="flex gap-2 items-center">
-                <label for="media-poster-path">Poster URL</label>
+                <label for="media-poster-path">{t("Poster URL")}</label>
                 <input
                   type="url"
                   autocomplete="photo"
@@ -84,7 +87,8 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
               </div>
               <div class="flex gap-2 items-center">
                 <label for="media-poster-path">
-                  Release date<span class="text-red-700">*</span>
+                  {t("Release date")}
+                  <span class="text-red-700">*</span>
                 </label>
                 <input
                   type="date"
@@ -96,7 +100,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                 />
               </div>
               <div class="flex gap-2 items-center">
-                <label for="media-path">File path</label>
+                <label for="media-path">{t("File path")}</label>
                 <input
                   type="url"
                   readOnly
@@ -116,14 +120,14 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
               class="flex gap-2 text-nowrap rounded-md opacity-90 hover:opacity-100 px-4 py-2 ml-auto"
               onClick={props.onClose}
             >
-              Cancel
+              {t("Cancel")}
             </button>
             <button
               type="submit"
               class="flex gap-2 text-nowrap rounded-md bg-primary/90 hover:bg-primary px-4 py-2"
             >
               <Icon icon="floppy-disk" size={24} />
-              Save
+              {t("Save")}
             </button>
           </footer>
         </form>

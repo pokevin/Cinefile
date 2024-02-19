@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import type { JSX } from "solid-js/jsx-runtime";
+import { useTranslation } from "../../services/i18n/translate";
 import { Icon } from "../Icon";
 import { useModalContext } from "./ModalContext";
 
 export const ModalHeader = (props: JSX.HTMLAttributes<HTMLElement>) => {
   const { id, onClose } = useModalContext();
+  const t = useTranslation();
   return (
     <header
       {...props}
@@ -18,7 +20,7 @@ export const ModalHeader = (props: JSX.HTMLAttributes<HTMLElement>) => {
           {props.children}
         </h2>
       )}
-      <button type="button" aria-label="Close modal" onClick={onClose}>
+      <button type="button" aria-label={t("close modal")} onClick={onClose}>
         <Icon icon="x" size={28} />
       </button>
     </header>

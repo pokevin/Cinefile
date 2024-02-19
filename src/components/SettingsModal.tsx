@@ -1,4 +1,5 @@
 import { useConfig } from "../services/config";
+import { useTranslation } from "../services/i18n/translate";
 import { Modal } from "./Modal/Modal";
 import { ModalContent } from "./Modal/ModalContent";
 import { ModalHeader } from "./Modal/ModalHeader";
@@ -11,14 +12,16 @@ type SettingsModalProps = {
 
 export const SettingsModal = (props: SettingsModalProps) => {
   const [config] = useConfig();
+  const t = useTranslation();
 
   return (
     <Modal id="settings-modal" isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalHeader>Settings</ModalHeader>
+      <ModalHeader>{t("Settings")}</ModalHeader>
       <ModalContent class="p-6">
         <div class="flex flex-col gap-2">
           <label>
-            Media directory<span class="text-red-700">*</span>
+            {t("Media directory")}
+            <span class="text-red-700">*</span>
           </label>
           <div class="flex gap-2 items-center">
             <input
@@ -29,7 +32,7 @@ export const SettingsModal = (props: SettingsModalProps) => {
               value={config().mediaDirectoryPath}
             />
             <SelectMediaDirectoryButton>
-              Select the media directory
+              {t("Select the media directory")}
             </SelectMediaDirectoryButton>
           </div>
         </div>

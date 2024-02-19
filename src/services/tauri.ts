@@ -22,12 +22,12 @@ const handleTauriError = (message: string) => (err: Error) => {
   throw err;
 };
 
-export const openDialogSelectDirectory = async (): Promise<
-  string | undefined
-> => {
+export const openDialogSelectDirectory = async (
+  dialogTitle: string,
+): Promise<string | undefined> => {
   const selectedDirPath = await open({
     multiple: false,
-    title: "Select the media directory",
+    title: dialogTitle,
     directory: true,
   }).catch(
     handleTauriError(

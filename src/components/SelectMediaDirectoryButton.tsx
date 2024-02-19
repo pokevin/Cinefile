@@ -1,15 +1,19 @@
 import clsx from "clsx";
 import { JSX } from "solid-js/jsx-runtime";
 import { useConfig } from "../services/config";
+import { useTranslation } from "../services/i18n/translate";
 import { openDialogSelectDirectory } from "../services/tauri";
 
 export const SelectMediaDirectoryButton = (
   props: JSX.ButtonHTMLAttributes<HTMLButtonElement>,
 ) => {
   const [, setConfig] = useConfig();
+  const t = useTranslation();
 
   const onSelectFolder = async () => {
-    const selectedDirPath = await openDialogSelectDirectory();
+    const selectedDirPath = await openDialogSelectDirectory(
+      t("Select the media directory"),
+    );
     if (selectedDirPath) {
       setConfig("mediaDirectoryPath", selectedDirPath);
     }
