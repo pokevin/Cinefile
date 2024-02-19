@@ -65,52 +65,54 @@ export const MediaLibrary = () => {
     medias()?.find((media) => media.id === editingMediaId());
 
   return (
-    <ul class="flex gap-4 flex-wrap bg-black/30 rounded-3xl p-8">
-      <For each={medias()}>
-        {(item) => (
-          <li class="group relative">
-            <button
-              type="button"
-              class="text-left w-40 overflow-hidden group-hover:after:opacity-100 after:absolute after:top-0 after:left-0 after:w-full after:aspect-poster after:border-2 after:border-primary after:opacity-0 after:transition-opacity"
-              onClick={() => selectedMedia(item.url)}
-            >
-              <PosterImage
-                alt={item.title}
-                src={item.posterPath}
-                class="group-hover:brightness-75"
-              />
-              <div class="font-semibold text-ellipsis overflow-hidden whitespace-nowrap">
-                {item.title}
-              </div>
-              <span class="text-body-secondary text-sm">
-                {item.releaseDate.getFullYear()}
-              </span>
-              <Icon
-                icon="play"
-                size={80}
-                class="absolute top-[calc(50%-24px)] left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-4 bg-white/40 rounded-full text-white"
-              />
-            </button>
-            <button
-              type="button"
-              class="absolute right-0 top-0 p-1 opacity-0 group-hover:opacity-80 transition-opacity"
-              onclick={() => setEditingMediaId(item.id)}
-            >
-              <Icon icon="pen" size={24} />
-            </button>
-          </li>
-        )}
-      </For>
-      <Show when={editingMedia()}>
-        {(media) => (
-          <EditMediaModal
-            media={media()}
-            isOpen={!!editingMediaId()}
-            onSave={saveMediaEdition}
-            onClose={() => setEditingMediaId(undefined)}
-          />
-        )}
-      </Show>
-    </ul>
+    <Show when={!!medias()?.length}>
+      <ul class="flex gap-4 flex-wrap bg-black/30 rounded-3xl p-8">
+        <For each={medias()}>
+          {(item) => (
+            <li class="group relative">
+              <button
+                type="button"
+                class="text-left w-40 overflow-hidden group-hover:after:opacity-100 after:absolute after:top-0 after:left-0 after:w-full after:aspect-poster after:border-2 after:border-primary after:opacity-0 after:transition-opacity"
+                onClick={() => selectedMedia(item.url)}
+              >
+                <PosterImage
+                  alt={item.title}
+                  src={item.posterPath}
+                  class="group-hover:brightness-75"
+                />
+                <div class="font-semibold text-ellipsis overflow-hidden whitespace-nowrap">
+                  {item.title}
+                </div>
+                <span class="text-body-secondary text-sm">
+                  {item.releaseDate.getFullYear()}
+                </span>
+                <Icon
+                  icon="play"
+                  size={80}
+                  class="absolute top-[calc(50%-24px)] left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity p-4 bg-white/40 rounded-full text-white"
+                />
+              </button>
+              <button
+                type="button"
+                class="absolute right-0 top-0 p-1 opacity-0 group-hover:opacity-80 transition-opacity"
+                onclick={() => setEditingMediaId(item.id)}
+              >
+                <Icon icon="pen" size={24} />
+              </button>
+            </li>
+          )}
+        </For>
+        <Show when={editingMedia()}>
+          {(media) => (
+            <EditMediaModal
+              media={media()}
+              isOpen={!!editingMediaId()}
+              onSave={saveMediaEdition}
+              onClose={() => setEditingMediaId(undefined)}
+            />
+          )}
+        </Show>
+      </ul>
+    </Show>
   );
 };
