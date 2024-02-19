@@ -95,6 +95,16 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   value={formatDate(editingMedia().releaseDate)}
                 />
               </div>
+              <div class="flex gap-2 items-center">
+                <label for="media-path">File path</label>
+                <input
+                  type="url"
+                  readOnly
+                  class="min-w-96 w-full"
+                  id="media-path"
+                  value={props.media.url}
+                />
+              </div>
               <div>
                 <SearchMediaBar onSelectMedia={setEditingMedia} />
               </div>
