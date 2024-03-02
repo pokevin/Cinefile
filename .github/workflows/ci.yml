@@ -38,6 +38,19 @@ jobs:
       - name: install frontend dependencies
         run: pnpm install
 
+      - name: Build tauri
+        run: pnpm tauri build
+
+      - name: Cache cargo build
+        id: cache-cargo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{runner.os}}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
