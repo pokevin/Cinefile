@@ -51,6 +51,7 @@ jobs:
           prerelease: false
 
   generate-updater-config:
+    needs: publish-tauri
     permissions:
       contents: write
 
