@@ -12,7 +12,7 @@ type SettingsModalProps = {
 
 export const SettingsModal = (props: SettingsModalProps) => {
   const [config] = useConfig();
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Modal id="settings-modal" isOpen={props.isOpen} onClose={props.onClose}>

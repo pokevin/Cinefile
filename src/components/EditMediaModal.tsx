@@ -21,7 +21,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
   const [editingMedia, setEditingMedia] = createSignal<
     Pick<Media, "title" | "posterPath" | "releaseDate">
   >(props.media);
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   const handleChangePosterURL = debounce(
     (event: InputEvent & { target: HTMLInputElement }) => {

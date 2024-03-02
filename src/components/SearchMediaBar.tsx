@@ -1,7 +1,6 @@
 import debounce from "debounce";
 import { createSignal } from "solid-js";
 import { createResource } from "solid-js";
-import { useConfig } from "../services/config";
 import { useTranslation } from "../services/i18n/translate";
 import type { Media } from "../services/medias";
 import { searchMedia } from "../services/tmdb";
@@ -24,10 +23,9 @@ type SearchMediaBarProps = {
 
 export const SearchMediaBar = (props: SearchMediaBarProps) => {
   const [inputValue, setInputValue] = createSignal("");
-  const [config] = useConfig();
-  const t = useTranslation();
+  const { t, locale } = useTranslation();
   const [searchResults] = createResource(
-    () => [inputValue(), config().locale] as const,
+    () => [inputValue(), locale()] as const,
     searchMedias,
   );
 

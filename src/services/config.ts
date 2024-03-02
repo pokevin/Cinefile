@@ -1,18 +1,14 @@
 import type { Getter, Setter } from "jotai";
 import { atom, useAtom } from "solid-jotai";
-import { createEffect } from "solid-js";
-import { getLocale } from "./tauri";
 
 const CONFIG_KEY = "config";
 
 interface Config {
   mediaDirectoryPath: string;
-  locale: string | undefined;
 }
 
 const defaultConfig = {
   mediaDirectoryPath: "",
-  locale: undefined,
 } satisfies Config;
 
 const getInitialValue = (): Config => {
@@ -35,14 +31,4 @@ const derivedAtom = atom(
   },
 );
 
-export const useConfig = () => {
-  const [config, setConfig] = useAtom(derivedAtom);
-
-  createEffect(() => {
-    if (!config().locale) {
-      getLocale().then((locale) => locale && setConfig("locale", locale));
-    }
-  });
-
-  return [config, setConfig] as const;
-};
+export const useConfig = () => useAtom(derivedAtom);

@@ -6,7 +6,7 @@ import { useModalContext } from "./ModalContext";
 
 export const ModalHeader = (props: JSX.HTMLAttributes<HTMLElement>) => {
   const { id, onClose } = useModalContext();
-  const t = useTranslation();
+  const { t } = useTranslation();
   return (
     <header
       {...props}

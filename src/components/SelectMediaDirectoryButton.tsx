@@ -8,7 +8,7 @@ export const SelectMediaDirectoryButton = (
   props: JSX.ButtonHTMLAttributes<HTMLButtonElement>,
 ) => {
   const [, setConfig] = useConfig();
-  const t = useTranslation();
+  const { t } = useTranslation();
 
   const onSelectFolder = async () => {
     const selectedDirPath = await openDialogSelectDirectory(
