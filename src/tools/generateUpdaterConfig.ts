@@ -84,14 +84,12 @@ for (const env of [GITHUB_API_URL, GITHUB_REPOSITORY, GITHUB_TOKEN]) {
     {
       headers: {
         Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
         Authorization: `Bearer ${GITHUB_TOKEN}`,
       },
     },
   );
 
-  throw new Error(
-    `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/latest`,
-  );
   if (!res.ok) {
     throw new Error(await res.text());
   }
