@@ -55,7 +55,7 @@ export const searchMedia = async (
   });
 
   if (!response?.ok) {
-    console.log(response);
+    console.error(response);
     throw new Error("An error occured when fetching medias from TMDB");
   }
   return {
