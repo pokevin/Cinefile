@@ -40,20 +40,17 @@ jobs:
       - name: Cargo Cache
         uses: actions/cache@v1
         with:
-          path: ~/.cargo
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
+            ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.os }}-cargo
-
-      - name: Cargo Target Cache
-        uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-target-${{ hashFiles('**/Cargo.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-target-${{ hashFiles('**/Cargo.toml') }}
-            ${{ runner.os }}-cargo-target
 
       - uses: tauri-apps/tauri-action@v0
         env:
