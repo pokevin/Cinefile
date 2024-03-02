@@ -89,7 +89,9 @@ for (const env of [GITHUB_API_URL, GITHUB_REPOSITORY, GITHUB_TOKEN]) {
     },
   );
 
-  console.log(`${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/latest`);
+  throw new Error(
+    `${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/latest`,
+  );
   if (!res.ok) {
     throw new Error(await res.text());
   }
