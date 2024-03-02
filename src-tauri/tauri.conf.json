@@ -59,7 +59,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://github.com/pokevin/Cinefile/releases/download/v{{current_version}}/cinefile_{{current_version}}_{{arch}}_{{target}}.msi"
+        "https://github.com/pokevin/Cinefile/releases/latest/download/latest.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI0MDYzMDRBRUM3NkY2QjgKUldTNDluYnNTakFHdE1RdWw4cEIwRWUrWGFkM3Z5djRZdmNUNFNndWNLQWppRnBNQmZGV1ZRWXoK",

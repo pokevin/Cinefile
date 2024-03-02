@@ -68,22 +68,3 @@ jobs:
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: false
           prerelease: false
-
-  generate-updater-config:
-    needs: publish-tauri
-    permissions:
-      contents: write
-
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: setup bun
-        uses: oven-sh/setup-bun@v1
-
-      - name: generate updater config
-        id: generate-updater-config
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        run: |
-          bun src/tools/generateUpdaterConfig.ts > updater-config.json
