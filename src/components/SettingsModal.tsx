@@ -19,13 +19,14 @@ export const SettingsModal = (props: SettingsModalProps) => {
       <ModalHeader>{t("Settings")}</ModalHeader>
       <ModalContent class="p-6">
         <div class="flex flex-col gap-2">
-          <label>
+          <label for="media-directory">
             {t("Media directory")}
             <span class="text-red-700">*</span>
           </label>
           <div class="flex gap-2 items-center">
             <input
               type="text"
+              id="media-directory"
               class="h-full w-96"
               readOnly
               required
