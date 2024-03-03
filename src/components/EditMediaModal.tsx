@@ -70,6 +70,12 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   id="media-title"
                   autocomplete="off"
                   required
+                  onInput={(e) =>
+                    setEditingMedia((prev) => ({
+                      ...prev,
+                      title: e.target.value,
+                    }))
+                  }
                   value={editingMedia().title}
                 />
               </div>
@@ -96,6 +102,17 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   id="media-release-date"
                   name="releaseDate"
                   required
+                  onInput={(e) =>
+                    setEditingMedia((prev) => {
+                      const inputValue = e.target.valueAsDate;
+                      return inputValue
+                        ? {
+                            ...prev,
+                            releaseDate: inputValue,
+                          }
+                        : prev;
+                    })
+                  }
                   value={formatDate(editingMedia().releaseDate)}
                 />
               </div>
