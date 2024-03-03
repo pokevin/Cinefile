@@ -21,7 +21,6 @@ export const Modal = (props: ModalProps) => {
             aria-labelledby={`${id}-title`}
             aria-describedby={`${id}-description`}
             class="w-full h-full top-0 left-0 bg-black/50 fixed"
-            onClick={(e) => e.currentTarget === e.target && props.onClose()}
           >
             <div
               role="document"
