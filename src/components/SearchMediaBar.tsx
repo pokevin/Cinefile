@@ -17,7 +17,7 @@ const searchMedias = async ([input, lang]: readonly [
 
 type SearchMediaBarProps = {
   onSelectMedia: (
-    media: Pick<Media, "title" | "posterPath" | "releaseDate">,
+    media: Pick<Media, "title" | "posterPath" | "releaseDate" | "genres">,
   ) => void;
 };
 
@@ -37,6 +37,7 @@ export const SearchMediaBar = (props: SearchMediaBarProps) => {
       props.onSelectMedia({
         title: selectedMedia.title,
         posterPath: selectedMedia.poster_path,
+        genres: selectedMedia.genres,
         releaseDate: new Date(selectedMedia.release_date),
       });
     }

@@ -1,5 +1,5 @@
 import debounce from "debounce";
-import { createSignal } from "solid-js";
+import { type JSX, createSignal } from "solid-js";
 import { useTranslation } from "../services/i18n/translate";
 import type { Media } from "../services/medias";
 import { formatDate } from "../utils/date";
@@ -19,7 +19,7 @@ type EditMediaModalProps = {
 
 export const EditMediaModal = (props: EditMediaModalProps) => {
   const [editingMedia, setEditingMedia] = createSignal<
-    Pick<Media, "title" | "posterPath" | "releaseDate">
+    Pick<Media, "title" | "posterPath" | "releaseDate" | "genres">
   >(props.media);
   const { t } = useTranslation();
 
@@ -34,14 +34,14 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
     },
   );
 
-  const onSaveEdit = (event: Event) => {
+  const onSaveEdit: JSX.EventHandler<HTMLFormElement, Event> = (event) => {
     event.preventDefault();
-    const { releaseDate, ...editedMedia } = Object.fromEntries(
-      new FormData(event.target as HTMLFormElement),
-    );
+    const formData = new FormData(event.currentTarget);
+    const { releaseDate, ...editedMedia } = Object.fromEntries(formData);
     props.onSave({
       ...props.media,
       ...editedMedia,
+      genres: formData.getAll("genres") as Media["genres"],
       releaseDate: new Date(releaseDate as string),
       updatedAt: new Date(),
     });
@@ -93,7 +93,20 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                 />
               </div>
               <div class="flex gap-2 items-center">
-                <label for="media-poster-path">
+                <label for="genres">Genres</label>
+                {editingMedia().genres.map((genre) => (
+                  <input type="hidden" name="genres" value={genre} />
+                ))}
+                <input
+                  type="text"
+                  class="min-w-96 w-full"
+                  id="genres"
+                  disabled
+                  value={editingMedia().genres.join(", ")}
+                />
+              </div>
+              <div class="flex gap-2 items-center">
+                <label for="media-release-date">
                   {t("Release date")}
                   <span class="text-red-700">*</span>
                 </label>
