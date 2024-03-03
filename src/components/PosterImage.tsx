@@ -9,7 +9,7 @@ export const PosterImage = (props: JSX.ImgHTMLAttributes<HTMLImageElement>) => {
       width={160}
       height={237}
       class={clsx(
-        "aspect-poster w-40 object-cover text-white shadow-poster bg-black/30",
+        "aspect-poster w-40 h-[237px] object-cover text-white shadow-poster bg-black/30",
         props.class,
       )}
     />

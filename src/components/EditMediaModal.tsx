@@ -1,8 +1,9 @@
 import debounce from "debounce";
 import { type JSX, createSignal } from "solid-js";
 import { useTranslation } from "../services/i18n/translate";
-import type { Media } from "../services/medias";
+import { type Media, MediaGenre, genresList } from "../services/medias";
 import { formatDate } from "../utils/date";
+import { Chip } from "./Chip";
 import { Icon } from "./Icon";
 import { Modal } from "./Modal/Modal";
 import { ModalContent } from "./Modal/ModalContent";
@@ -22,6 +23,9 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
     Pick<Media, "title" | "posterPath" | "releaseDate" | "genres">
   >(props.media);
   const { t } = useTranslation();
+
+  const genreOptions = () =>
+    genresList.filter((genre) => !editingMedia().genres?.includes(genre));
 
   const handleChangePosterURL = debounce(
     (event: InputEvent & { target: HTMLInputElement }) => {
@@ -92,18 +96,40 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
                   value={editingMedia().posterPath}
                 />
               </div>
-              <div class="flex gap-2 items-center">
+              <div class="flex flex-col gap-2">
                 <label for="genres">Genres</label>
-                {editingMedia().genres.map((genre) => (
-                  <input type="hidden" name="genres" value={genre} />
-                ))}
-                <input
-                  type="text"
-                  class="min-w-96 w-full"
-                  id="genres"
-                  disabled
-                  value={editingMedia().genres.join(", ")}
-                />
+                <div class="flex gap-1.5 flex-wrap items-start">
+                  {editingMedia().genres.map((genre) => (
+                    <Chip
+                      label={t(genre)}
+                      onDelete={() =>
+                        setEditingMedia((prev) => ({
+                          ...prev,
+                          genres: prev.genres.filter((g) => g !== genre),
+                        }))
+                      }
+                      value={genre}
+                    />
+                  ))}
+                  <select
+                    class="pb-1 pt-[1px] pl-1 rounded-lg text-sm"
+                    onChange={(e) => {
+                      if (!e.target.value) return;
+                      setEditingMedia((prev) => ({
+                        ...prev,
+                        genres: [...prev.genres, e.target.value as MediaGenre],
+                      }));
+                      // Prevent changing selected option
+                      e.target.value = "";
+                    }}
+                    value="add"
+                  >
+                    <option value="">+ Ajouter</option>
+                    {genreOptions().map((genre) => (
+                      <option value={genre}>{t(genre)}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <div class="flex gap-2 items-center">
                 <label for="media-release-date">
