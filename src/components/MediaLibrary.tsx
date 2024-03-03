@@ -1,6 +1,7 @@
 import { For, Show, createResource, createSignal } from "solid-js";
 import { v5 as uuidv5 } from "uuid";
 import { useConfig } from "../services/config";
+import { useTranslation } from "../services/i18n/translate";
 import {
   type Media,
   getMedias,
@@ -44,11 +45,29 @@ export const MediaLibrary = () => {
   const [editingMediaId, setEditingMediaId] = createSignal<string | undefined>(
     undefined,
   );
+  const { t } = useTranslation();
   const mediaDirectoryPath = () => config().mediaDirectoryPath;
   const [medias, { mutate }] = createResource(
     mediaDirectoryPath,
     getMediasFromPath,
   );
+
+  const sortedMedia = () =>
+    [...(medias() ?? [])].sort((a, b) => {
+      const fieldName = config().sortBy;
+      const orderFactor = config().order === "asc" ? 1 : -1;
+      const aValue = a[fieldName];
+      const bValue = b[fieldName];
+
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return orderFactor * aValue.localeCompare(bValue);
+      }
+
+      if (aValue instanceof Date && bValue instanceof Date) {
+        return orderFactor * (aValue.getTime() - bValue.getTime());
+      }
+      return orderFactor * (+aValue - +bValue);
+    });
 
   const selectedMedia = async (url: string) => {
     launchFile(url).catch(console.error).then(console.info);
@@ -67,8 +86,27 @@ export const MediaLibrary = () => {
 
   return (
     <Show when={!!medias()?.length}>
+      <div class="flex gap-2 p-4 items-center">
+        <label>{t("Sort by")} :</label>
+        <select
+          class="px-2 pt-1 pb-1.5 rounded-md"
+          onChange={(e) => setConfig("sortBy", e.target.value)}
+        >
+          <option value="title">{t("Title")}</option>
+          <option value="releaseDate">{t("Release date")}</option>
+          <option value="updatedAt">{t("Updated at")}</option>
+        </select>
+        <label>{t("Order")} :</label>
+        <select
+          class="px-2 pt-1 pb-1.5 rounded-md"
+          onChange={(e) => setConfig("order", e.target.value)}
+        >
+          <option value="asc">↑ Asc</option>
+          <option value="desc">↓ Desc</option>
+        </select>
+      </div>
       <ul class="flex gap-4 flex-wrap bg-black/30 rounded-3xl p-8">
-        <For each={medias()}>
+        <For each={sortedMedia()}>
           {(item) => (
             <li class="group relative">
               <button

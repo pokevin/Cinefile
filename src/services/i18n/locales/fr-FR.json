@@ -4,12 +4,15 @@
   "Edit media": "Modifer le média",
   "File path": "Chemin du fichier",
   "Media directory": "Dossier des médias",
+  "Order": "Ordre",
   "Poster URL": "URL du poster",
   "Release date": "Date de sortie",
   "Save": "Enregistrer",
   "Search a media": "Rechercher un média",
   "Select the media directory": "Séléctionner le dossier des médias",
-  "Settings": "Configurations",
+  "Settings": "oConfigurations",
+  "Sort by": "Trier par",
   "Title": "Titre",
-  "Unknown": "Inconnu"
+  "Unknown": "Inconnu",
+  "Updated at": "Date de modification"
 }

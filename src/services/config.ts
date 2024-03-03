@@ -1,14 +1,19 @@
 import type { Getter, Setter } from "jotai";
 import { atom, useAtom } from "solid-jotai";
+import type { Media } from "./medias";
 
 const CONFIG_KEY = "config";
 
-interface Config {
+export interface Config {
   mediaDirectoryPath: string;
+  sortBy: Extract<keyof Media, "title" | "releaseDate" | "updatedAt">;
+  order: "asc" | "desc";
 }
 
 const defaultConfig = {
   mediaDirectoryPath: "",
+  sortBy: "title",
+  order: "asc",
 } satisfies Config;
 
 const getInitialValue = (): Config => {
