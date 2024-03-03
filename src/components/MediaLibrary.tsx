@@ -80,7 +80,7 @@ export const MediaLibrary = () => {
       );
 
   const selectedMedia = async (url: string) => {
-    launchFile(url).catch(console.error).then(console.info);
+    launchFile(url).catch(console.error);
   };
 
   const saveMediaEdition = async (editedMedia: Media) => {
