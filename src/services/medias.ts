@@ -6,6 +6,7 @@ export interface Media {
   posterPath: string;
   url: string;
   releaseDate: Date;
+  updatedAt: Date;
 }
 
 export const getMedias = async (): Promise<Media[]> => {

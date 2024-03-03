@@ -43,6 +43,7 @@ export const EditMediaModal = (props: EditMediaModalProps) => {
       ...props.media,
       ...editedMedia,
       releaseDate: new Date(releaseDate as string),
+      updatedAt: new Date(),
     });
   };
 

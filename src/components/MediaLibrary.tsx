@@ -31,6 +31,7 @@ const getMediasFromPath = async (path: string) => {
         posterPath: "",
         url: file.path,
         releaseDate: new Date(),
+        updatedAt: new Date(),
       }));
     await insertMedias(newMedias);
     return [...medias, ...newMedias];
@@ -39,7 +40,7 @@ const getMediasFromPath = async (path: string) => {
 };
 
 export const MediaLibrary = () => {
-  const [config] = useConfig();
+  const [config, setConfig] = useConfig();
   const [editingMediaId, setEditingMediaId] = createSignal<string | undefined>(
     undefined,
   );
