@@ -5,7 +5,7 @@ on:
   pull_request:
   push:
     tags:
-      - '**'
+      - "**"
 
 jobs:
   publish-tauri:
@@ -51,40 +51,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
             ${{ runner.os }}-cargo
-      
+
       - name: import windows certificate
-  if: matrix.platform == 'windows-latest'
-  env:
-    WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
-    WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
-  run: |
-    New-Item -ItemType directory -Path certificate
-    Set-Content -Path certificate/tempCert.txt -Value $env:WINDOWS_CERTIFICATE
-    certutil -decode certificate/tempCert.txt certificate/certificate.pfx
-    Remove-Item -path certificate -include tempCert.txt
-    Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
-
-    Save and push to your repo.
-
-    Your workflow can now import your windows certificate and import it into the GitHub runner, allowing for automated code signing!
-
-Edit this page
-Last updated on Oct 4, 2023
-Previous
-App Publishing
-Next
-Linux Code Signing
-
-    Intro
-    Prerequisites
-    Getting Started
-        A. Convert your .cer to .pfx
-        B. Import your .pfx file into the keystore.
-        C. Prepare Variables
-    Prepare tauri.conf.json file
-    BONUS: Sign your application with GitHub Actions.
-        GitHub Secrets
-
+        if: matrix.platform == 'windows-latest'
+        env:
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          New-Item -ItemType directory -Path certificate
+          Set-Content -Path certificate/tempCert.txt -Value $env:WINDOWS_CERTIFICATE
+          certutil -decode certificate/tempCert.txt certificate/certificate.pfx
+          Remove-Item -path certificate -include tempCert.txt
+          Import-PfxCertificate -FilePath certificate/certificate.pfx -CertStoreLocation Cert:\CurrentUser\My -Password (ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText)
 
       - uses: tauri-apps/tauri-action@v0
         env:
@@ -94,7 +72,7 @@ Linux Code Signing
           VITE_TMDB_TOKEN: ${{ secrets.VITE_TMDB_TOKEN }}
         with:
           tagName: v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'Cinefile-v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          releaseName: "Cinefile-v__VERSION__"
+          releaseBody: "See the assets to download this version and install."
           releaseDraft: false
           prerelease: false
