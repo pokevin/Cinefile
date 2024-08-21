@@ -2,49 +2,37 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "withGlobalTauri": true,
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
   },
-  "package": {
-    "productName": "Cinefile",
-    "version": "0.0.1"
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "createUpdaterArtifacts": "v1Compatible"
   },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "os": {
-        "all": true
-      },
-      "http": {
-        "scope": ["https://api.themoviedb.org/*"],
-        "request": true
-      },
-      "dialog": {
-        "open": true
-      },
-      "fs": {
-        "exists": true,
-        "readDir": true,
-        "readFile": true,
-        "scope": ["$HOME/*"]
+  "productName": "Cinefile",
+  "version": "0.0.1",
+  "identifier": "com.cinefile.mov",
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI0MDYzMDRBRUM3NkY2QjgKUldTNDluYnNTakFHdE1RdWw4cEIwRWUrWGFkM3Z5djRZdmNUNFNndWNLQWppRnBNQmZGV1ZRWXoK",
+      "endpoints": [
+        "https://github.com/pokevin/Cinefile/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "basicUi"
       }
-    },
-    "bundle": {
-      "active": true,
-      "targets": "all",
-      "identifier": "com.cinefile.mov",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
-    },
-    "security": {
-      "csp": null
-    },
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "maximized": true,
@@ -55,16 +43,8 @@
         "height": 600
       }
     ],
-    "updater": {
-      "active": true,
-      "endpoints": [
-        "https://github.com/pokevin/Cinefile/releases/latest/download/latest.json"
-      ],
-      "dialog": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI0MDYzMDRBRUM3NkY2QjgKUldTNDluYnNTakFHdE1RdWw4cEIwRWUrWGFkM3Z5djRZdmNUNFNndWNLQWppRnBNQmZGV1ZRWXoK",
-      "windows": {
-        "installMode": "basicUi"
-      }
+    "security": {
+      "csp": null
     }
   }
 }

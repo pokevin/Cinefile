@@ -1,9 +1,9 @@
-import { invoke } from "@tauri-apps/api";
 import { getName } from "@tauri-apps/api/app";
-import { open } from "@tauri-apps/api/dialog";
-import { readDir } from "@tauri-apps/api/fs";
-import { FetchOptions, fetch } from "@tauri-apps/api/http";
-import { locale } from "@tauri-apps/api/os";
+import { invoke } from "@tauri-apps/api/core";
+import { open } from "@tauri-apps/plugin-dialog";
+import { readDir } from "@tauri-apps/plugin-fs";
+import { ClientOptions, fetch } from "@tauri-apps/plugin-http";
+import { locale } from "@tauri-apps/plugin-os";
 import packageJson from "../../package.json";
 import { hasVideoFileExtension } from "../utils/video";
 
@@ -58,7 +58,7 @@ export const getVideoFilesFromPath = async (dirPath: string) => {
   const entries = await readDir(dirPath)
     .then((files) =>
       files.filter(
-        (file) => !file.children && hasVideoFileExtension(file.path),
+        (file) => !file.isDirectory && hasVideoFileExtension(file.name),
       ),
     )
     .catch(
@@ -69,11 +69,11 @@ export const getVideoFilesFromPath = async (dirPath: string) => {
   return entries ?? [];
 };
 
-export const tauriFetch = <R>(
-  input: URL | RequestInfo,
-  init?: Partial<FetchOptions>,
+export const tauriFetch = (
+  input: URL,
+  init?: Partial<RequestInit & ClientOptions>,
 ) =>
-  fetch<R>(input.toString(), {
+  fetch(input.toString(), {
     ...init,
     method: init?.method ?? "GET",
   }).catch(

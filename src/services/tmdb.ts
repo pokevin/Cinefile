@@ -67,7 +67,7 @@ export const searchMedia = async (query: string, lang?: string) => {
   requestUrl.searchParams.set("query", query);
   if (lang) requestUrl.searchParams.set("language", lang);
 
-  const response = await tauriFetch<MediaSearchResponse>(requestUrl, {
+  const response = await tauriFetch(requestUrl, {
     headers: {
       Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
     },
@@ -77,9 +77,10 @@ export const searchMedia = async (query: string, lang?: string) => {
     console.error(response);
     throw new Error("An error occured when fetching medias from TMDB");
   }
+  const responseData = (await response.json()) as MediaSearchResponse;
   return {
-    ...response.data,
-    results: response.data.results.map((result) => ({
+    ...responseData,
+    results: responseData.results.map((result) => ({
       ...result,
       genres: result.genre_ids.map(
         (id) => TMDB_GENRES[id as keyof typeof TMDB_GENRES],
