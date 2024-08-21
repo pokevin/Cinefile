@@ -15,8 +15,7 @@ fn launch_file(file_path: &str) -> String {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
-        .invoke_handler(tauri::generate_handler![launch_file])
+        .invoke_handler(tauri::generate_handler![greet, launch_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
