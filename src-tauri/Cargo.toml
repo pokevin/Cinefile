@@ -30,4 +30,4 @@ lto = true        # Enables link to optimizations
 opt-level = "s"   # Optimize for binary size
 
 [target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
-tauri-plugin-updater = "2.0.0-rc.1"
+tauri-plugin-updater = "2.0.0-rc"

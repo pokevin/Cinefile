@@ -16,14 +16,6 @@ fn launch_file(file_path: &str) -> String {
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet, launch_file])
-        .plugin(tauri_plugin_updater::Builder::new().build())
-        .setup(|app| {
-            let handle = app.handle();
-            tauri::async_runtime::spawn(async move {
-                let response = handle.updater().check().await;
-            });
-            Ok(())
-        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
